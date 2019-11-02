@@ -35,12 +35,14 @@ function runProgram() {
       connection.query(query, { id: answer.id }, function(err, res) {
         if (err) throw err;
         for (var i = 0; i < res.length; i++) {
+        if (res[i].stock_quantity === 0) {console.log("Sorry, fresh out!"); BuyAnother()}
+        else {
           console.log("You have selected " + res[i].product_name + ". There is/are " + res[i].stock_quantity + " available." );
           choice = answer.id;
           price = res[i].price;
           howMany();
         }
-      });
+      }});
 })};
 
 function howMany() {
@@ -61,8 +63,8 @@ function howMany() {
                price = answer.stock_quantity * price;
                 Buy ();
               }
-              else { console.log("Sorry, out of stock!");
-              connection.end();
+              else { console.log("Sorry, that's more than we have!");
+              ChangeQuantity();
             }
           } 
         });
@@ -85,10 +87,48 @@ function howMany() {
         ],
             function(err, res) {
             if (err) throw err;
-            console.log ("Awesome! Your account has been charged $" + price + ".")
+            console.log ("Awesome! Your account has been charged $" + price + "."); BuyAnother();
         });}
-        else {console.log("That's ok! It's a lot of money!");
+        else {console.log("That's ok! It's a lot of money!"); BuyAnother();
     }
-        connection.end();
+        
       });
-  }
+  };
+
+  function BuyAnother () {
+    inquirer
+    .prompt({
+      name: "BuyAnother",
+      type: "confirm",
+      message: "Would you like to buy something else?", 
+      default: true
+    })
+    .then(function(answer) {
+        if (answer.BuyAnother) { 
+        runProgram()
+        }
+        else {console.log("That's ok! See you next time!");
+        connection.end();
+    }
+        
+      });
+  };
+
+  function ChangeQuantity () {
+    inquirer
+    .prompt({
+      name: "ChangeQuantity",
+      type: "confirm",
+      message: "Would you like to change your quantity?", 
+      default: true
+    })
+    .then(function(answer) {
+        if (answer.ChangeQuantity) { 
+       howMany()
+        }
+        else {console.log("Sorry. Check back next millennium for updated inventory!");
+        BuyAnother();
+    }  
+      });
+  };
+  
