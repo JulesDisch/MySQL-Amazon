@@ -1,8 +1,8 @@
 # MySQL-Amazon
 It's Amazon. . .in Space!
-Here we have a basic CLI application, representative of a storefront.
+Here we have a basic CLI application, representative of a storefront. We make use of javaScript, Node.js, and MySql.
 I decided to have a little fun with it, and so in this store, you can buy an assortment of astronomical objects.
-
+## Customer
 All experiences:
     When a user first enters the store, they are presented with a list of all possible products.
     The user is then prompted with "What is the ID of the product you would like to buy?"
@@ -37,5 +37,17 @@ Final experience:
     1.  When the user declines "Would you like to buy something else?", they see the message "That's ok! See you next time!"
     2.  The app is now finished; we can start a new bash command.
     [Screenshot](assets/screenshots/finalExperience.png)
+
+## Manager
+For the manager experience, we utilize switch cases, accessible from the choices for our initial inquirer prompt.
+    Different from the customer experience, all of our options are immediately visible: "View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", and "Exit".
+    1.  "View Products for Sale" shows our whole store.
+    2.  "View Low Inventory" shows our stock levels for products with fewer than five.
+    3.  "Add to Inventory" lets the user update the stock levels for a product already in the system.
+    4.  "Add New Product" lets the user add an entirely new product.
+        a.  Shows how the new product has been added to the inventory.
+    5.  "Exit" causes the app to finish.
+    [Screenshot](assets/screenshots/manager.png)
+
 
 

@@ -18,7 +18,7 @@ connection.connect(function(err) {
       if (err) throw err;
       console.log("Welcome to the Space Store! Here are all available products:")
       for (var i = 0; i < res.length; i++) {
-      console.log("ID: " + res[i].id, res[i].name, res[i].product_name, res[i].department, res[i].department_name+ " |", "Price: $"+ res[i].price);}
+      console.log("ID: " + res[i].id, res[i].name, res[i].product_name, res[i].department, res[i].department_name, res[i].price_holder, res[i].price);}
       runProgram();
     });
 });
