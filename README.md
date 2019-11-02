@@ -31,13 +31,11 @@ Selecting a greater amount than the stock experience:
     Alternatively:
     4.  If they decline, it will tell them to check back later for new inventory.
     5.  It will ask if they want to buy another item.
-
     [Screenshot of greater than stock experience:](assets/screenshots/greaterStock.png)
 
 Final experience:
     1.  When the user declines "Would you like to buy something else?", they see the message "That's ok! See you next time!"
     2.  The app is now finished; we can start a new bash command.
-
     [Screenshot](assets\screenshots\finalExperience.png)
 
 
