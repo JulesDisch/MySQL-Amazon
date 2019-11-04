@@ -47,7 +47,7 @@ For the manager experience, we utilize switch cases, accessible from the choices
     4.  "Add New Product" lets the user add an entirely new product.
         a.  Shows how the new product has been added to the inventory.
     5.  "Exit" causes the app to finish.
-    [Screenshot](assets/screenshots/manager.png)
+    [Screenshot](assets/screenshots/managerExperience.png)
 
 
 

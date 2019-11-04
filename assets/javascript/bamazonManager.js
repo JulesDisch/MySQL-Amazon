@@ -2,6 +2,8 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 var choice;
 var quantity;
+var Table = require('cli-table');
+var productTable;
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -58,9 +60,21 @@ function productList() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         console.log("Here are all available products:")
+        productTable = new Table({
+            head: ['ID', 'Product', 'Department', 'Price', 'Stock Quantity'],
+            chars: {
+                'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗'
+                , 'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝'
+                , 'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼'
+                , 'right': '║', 'right-mid': '╢', 'middle': '│'
+            }
+        });
         for (var i = 0; i < res.length; i++) {
-            console.log("ID: " + res[i].id, res[i].name, res[i].product_name, res[i].department, res[i].department_name, res[i].price_holder, res[i].price, res[i].stock, res[i].stock_quantity);
+            productTable.push(
+                [res[i].id, res[i].product_name, res[i].department_name, "$" + res[i].price, res[i].stock_quantity],
+            );
         }
+        console.log(productTable.toString());
         runManager();
     });
 };
@@ -68,11 +82,23 @@ function productList() {
 function lowInventory() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
-        console.log("Here are all low inventory products:")
+        console.log("Here are all low inventory products:");
+        productTable = new Table({
+            head: ['ID', 'Product', 'Department', 'Price', 'Stock Quantity'],
+            chars: {
+                'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗'
+                , 'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝'
+                , 'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼'
+                , 'right': '║', 'right-mid': '╢', 'middle': '│'
+            }
+        });
         for (var i = 0; i < res.length; i++) {
             if (res[i].stock_quantity <= 5)
-                console.log("ID: " + res[i].id, res[i].name, res[i].product_name, res[i].department, res[i].department_name, res[i].price_holder, res[i].price, res[i].stock, res[i].stock_quantity);
+                productTable.push(
+                    [res[i].id, res[i].product_name, res[i].department_name, "$" + res[i].price, res[i].stock_quantity],
+                );
         }
+        console.log(productTable.toString());
         runManager();
     });
 };
@@ -153,13 +179,9 @@ function addProduct() {
             var query = connection.query(
                 "INSERT INTO bamazondb.products SET ?",
                 {
-                    name: "| Name: ",
                     product_name: answer.product_name,
-                    department: " | Department name: ",
                     department_name: answer.department_name,
-                    price_holder: "| Price: $",
                     price: answer.price,
-                    stock: " | Stock quantity: ",
                     stock_quantity: answer.stock_quantity,
                 },
                 function (err, res) {
